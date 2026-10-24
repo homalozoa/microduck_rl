@@ -59,8 +59,8 @@ def list_checkpoints(run: Path, kind: str):
 
 
 @torch.no_grad()
-def evaluate(env, policy, device):
-    env.common_step_counter = 10**8  # every curriculum at its final stage (applied at reset)
+def evaluate(env, policy, device, counter: int = 10**8):
+    env.common_step_counter = counter  # 10**8: every curriculum at its final stage (applied at reset)
     torch.manual_seed(SEED)
     obs, _ = env.reset()
     obs = obs["actor"]
@@ -102,6 +102,7 @@ def main():
     ap.add_argument("--kind", choices=("ppo", "sm"), required=True)
     ap.add_argument("--every", type=int, default=1, help="evaluate every N-th checkpoint (the last one always)")
     ap.add_argument("--device", default="cuda:0")
+    ap.add_argument("--initial-stage", action="store_true", help="diagnostic: last checkpoint only, curricula at stage 0 -> eval_initial.json")
     args = ap.parse_args()
     from mjlab.envs import ManagerBasedRlEnv
     from mjlab.tasks.registry import load_env_cfg
@@ -118,6 +119,14 @@ def main():
     cfg.seed = SEED
     env = ManagerBasedRlEnv(cfg, device=args.device)
     cks = list_checkpoints(run, args.kind)
+    if args.initial_stage:
+        f, meta = cks[-1]
+        pol = ppo_policy(f, args.device) if args.kind == "ppo" else sm_policy(f, args.device)
+        rec = {"ckpt": f.name, **meta, **evaluate(env, pol, args.device, counter=0)}
+        print(json.dumps(rec), flush=True)
+        (run / "eval_initial.json").write_text(json.dumps(rec))
+        env.close()
+        return
     for i, (f, meta) in enumerate(cks):
         if f.name in done or (i % args.every and i != len(cks) - 1):
             continue
