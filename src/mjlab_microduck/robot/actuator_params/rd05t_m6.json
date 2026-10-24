@@ -1,0 +1,20 @@
+{
+    "kt": 0.34719752211745736,
+    "R": 2.061551635207704,
+    "armature": 0.0005290343761904772,
+    "q_offset": -0.04270258764583865,
+    "command_delay": 0.01921929967495936,
+    "friction_base": 0.01081425253465673,
+    "friction_stribeck": 3.0556998779892194e-10,
+    "load_friction_motor": 3.637218896928316e-08,
+    "load_friction_external": 0.533650361523046,
+    "load_friction_motor_stribeck": 0.1239556612716621,
+    "load_friction_external_stribeck": 0.09970389603814667,
+    "load_friction_motor_quad": 0.008908074211501983,
+    "load_friction_external_quad": 0.0046757983190409205,
+    "dtheta_stribeck": 0.10000005926346348,
+    "alpha": 1.0132630279852326,
+    "friction_viscous": 0.00312069037778001,
+    "model": "m6",
+    "actuator": "xl330"
+}

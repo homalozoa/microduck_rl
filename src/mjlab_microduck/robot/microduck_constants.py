@@ -160,9 +160,16 @@ FULL_COLLISION = CollisionCfg(
 #   - vin_drop_gain_range: load-dependent voltage sag V_drop = gain * sum(|tau|)
 #   - vin_min: hard floor on the effective voltage after sag
 # kp_fw kept at 200 (microduck's preserved firmware stiffness; microban uses 125).
+#
+# Params: the robot's KPower RD05T servos (rd05t_firmware, mode 3, position gain
+# scale register 86 = 100), fitted with BAM M6 on the 7.6 V bench on 2026-10-24
+# (micro_duck/bam_handoff/analysis/rd05t_7v6_20261024). Against BAM's bundled
+# xl330 m6 (motor_name="xl330", model="m6", what earlier policies trained on) the
+# RD05T has ~18% more torque per volt, ~5x the load-dependent gear friction and
+# ~9 ms more command delay. kp_fw=200 here is register 200 on the real servo.
+BAM_PARAMS_JSON: Path = Path(os.path.dirname(__file__)) / "actuator_params" / "rd05t_m6.json"
 _BAM_ACTUATOR_KWARGS = dict(
-    motor_name="xl330",
-    model="m6",
+    json_path=str(BAM_PARAMS_JSON),
     target_names_expr=(r"^(?!passive_).*",),
     kp_fw=200.0,  # microduck's preserved firmware stiffness (microban uses 125)
     # vin_range=(6.9, 7.9),
