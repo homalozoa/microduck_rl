@@ -1,5 +1,37 @@
 # Microduck RL
 
+The default training robot is now the vendored `duckurdf` model in
+`src/mjlab_microduck/robot/duckurdf/`. Its URDF, STL geometry, link masses,
+inertias, joint origins and limits are retained. The original MJCFs remain
+unchanged as templates for the 14-servo interface, sensors, servo-contact
+proxies and optional roller attachments. The jaw stays closed and unactuated,
+as in the original policy family. A fixed 24 mm base-frame translation keeps
+the historical `trunk_base` height reference; no robot dimensions are scaled.
+
+Rebuild all eight MJCF variants with `uv run python scripts/import_duckurdf.py`.
+`model_manifest.json` records the source hash and joint-sign conversions.
+Walking uses sole contacts, ground tasks use link convex hulls, and the
+protective-fall model also retains the original separate servo-housing contact
+proxies. Sensor mounts absent from URDF retain their original local offsets.
+
+To smoke-test all 33 registered MicroDuck tasks (64 envs, five PPO iterations,
+normalized ONNX export and a 61-input/14-output inference check), then train
+every task from scratch with its original iteration budget:
+
+```bash
+uv run python scripts/train_all_duckurdf.py --campaign duckurdf-20261019-fresh --gpus 0 7 --num-envs 4096
+```
+
+The batch sets `MICRODUCK_FROM_SCRATCH=1`: VelStand uses its original
+from-scratch curriculum and disables the old-morphology W&B expert/anchor.
+No old checkpoint or W&B credential is needed. Reward definitions and task
+iteration budgets are retained.
+The batch uses local TensorBoard logs and only starts full training after all
+smoke gates pass. Its plan, per-task logs and resumable status live under
+`logs/duckurdf_campaigns/<campaign>/`; checkpoints and policies live under
+`logs/rsl_rl/duckurdf/<campaign>/`. A successful smoke gate checks software
+compatibility; learned behavior and hardware transfer require separate evaluation.
+
 <img width="2215" height="884" alt="image" src="https://github.com/user-attachments/assets/5db7cc83-b3ce-4f7c-83f0-0572a63baed7" />
 
 

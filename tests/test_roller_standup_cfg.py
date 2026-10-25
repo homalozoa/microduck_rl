@@ -201,14 +201,45 @@ def test_recovery_rewards_use_roller_heights_not_walker_heights():
     assert cfg.rewards["upright_sharp"].params["height_high"] == ROLLER_STAND_Z
 
 
-def test_pose_rewards_target_legs_only_at_roller_indices():
-    from mjlab_microduck.tasks.microduck_roller_standup_env_cfg import _LEG_JOINTS
+def test_pose_rewards_target_legs_only_in_filtered_servo_order():
+    from mjlab_microduck.tasks.microduck_roller_standup_env_cfg import _SERVO_LEG_JOINTS
 
     cfg = make_microduck_roller_standup_env_cfg()
     for name in ("pose_stand_legs", "pose_stand_l1", "standing_composite"):
-        assert cfg.rewards[name].params["joint_indices"] == _LEG_JOINTS
+        assert cfg.rewards[name].params["joint_indices"] == _SERVO_LEG_JOINTS
         # target_overrides=None → la cible est HOME (default_joint_pos).
         assert cfg.rewards[name].params["target_overrides"] is None
+
+
+def test_pose_rewards_execute_with_interleaved_passive_wheels():
+    import torch
+    from types import SimpleNamespace
+    from mjlab_microduck.robot.microduck_constants import get_walk_rollers_spec
+
+    model = get_walk_rollers_spec().compile()
+    names = [model.joint(j).name for j in range(1, model.njnt)]
+    servo_ids = [i for i, name in enumerate(names) if not name.startswith("passive_")]
+    data = SimpleNamespace(joint_pos=torch.zeros(2, len(names)),
+                           default_joint_pos=torch.zeros(2, len(names)),
+                           root_link_pos_w=torch.tensor([[0., 0., .138]]).repeat(2, 1),
+                           root_link_quat_w=torch.tensor([[1., 0., 0., 0.]]).repeat(2, 1))
+    asset = SimpleNamespace(data=data, find_joints=lambda _: (servo_ids, [names[i] for i in servo_ids]))
+
+    class Scene(dict):
+        terrain = SimpleNamespace(env_origins=torch.zeros(2, 3))
+
+    env = SimpleNamespace(scene=Scene(robot=asset))
+    cfg = make_microduck_roller_standup_env_cfg()
+    for name in ("pose_stand_legs", "pose_stand_l1", "standing_composite"):
+        reward = cfg.rewards[name]
+        baseline = reward.func(env, **reward.params)
+        assert torch.isfinite(baseline).all()
+        # Wheel rotation is excluded, while the right ankle remains rewarded.
+        data.joint_pos[:, names.index("passive_RR_wheel")] = 100.
+        assert torch.equal(reward.func(env, **reward.params), baseline)
+        data.joint_pos[:, names.index("right_ankle")] = .5
+        assert (reward.func(env, **reward.params) < baseline).all()
+        data.joint_pos.zero_()
 
 
 def test_trunk_asset_cfgs_are_distinct_objects():

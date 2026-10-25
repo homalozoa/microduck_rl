@@ -216,6 +216,7 @@ Phases (as before, but with a recovery backstop):
 """
 
 import math
+import os
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.managers import (
@@ -251,7 +252,10 @@ NUM_STEPS_PER_ENV = 24
 # velocity-recipe curriculum to its final stage so the loaded walk is trained
 # under the conditions it was trained under. Set False to train from scratch
 # with the original from-scratch schedule (phase constants below scale up).
-WARM_START = True
+# New-URDF training starts without checkpoints from the old morphology. Keep
+# the historical expert recipe available for explicitly continued old runs.
+FROM_SCRATCH = os.environ.get("MICRODUCK_FROM_SCRATCH", "0") == "1"
+WARM_START = not FROM_SCRATCH
 WARM_START_RUN = "pollen-robotics/mjlab_microduck/441tzs6d"   # alpha_walking.onnx
 WARM_START_CHECKPOINT = "model_3750.pt"
 
@@ -301,7 +305,7 @@ RECOVERY_ECON_KICKIN_ITER = 600 if WARM_START else 1200
 # Run-2 fix (1bqctpkq, 0 recoveries @1085 even with the attempt tax relieved):
 # distill the deployed stand expert into the fallen frames (see distill.py).
 # The expert recovers 100% face-down/up and 95% side on this model in ~1 s.
-ENABLE_EXPERT_BC = True
+ENABLE_EXPERT_BC = not FROM_SCRATCH
 EXPERT_BC_COEF = 1.0
 EXPERT_BC_GATE_TILT_DEG = 35.0
 

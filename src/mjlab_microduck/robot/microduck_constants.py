@@ -12,28 +12,31 @@ from mjlab.utils.spec_config import CollisionCfg
 
 
 _ROBOT_DIR: Path = Path(os.path.dirname(__file__)) / "microduck"
+# DuckURDF is the default training robot; original MJCFs remain regeneration
+# templates and provide the optional roller/servo-contact attachments.
+_DUCKURDF_DIR: Path = _ROBOT_DIR.parent / "duckurdf"
 
-MICRODUCK_WALK_XML: Path = _ROBOT_DIR / "robot_walk.xml"
+MICRODUCK_WALK_XML: Path = _DUCKURDF_DIR / "robot_walk.xml"
 # Ground-contact model (formerly "allcollisions"): curated collision set for
 # the parts that touch the floor in body-on-ground tasks (soles, legs, trunk
 # shells, head shells, jaw, battery, hips) — NOT every geom. Shared by
 # standup / ground-pick / sitstand / roulade / walk-rollers tasks.
-MICRODUCK_GROUNDCONTACT_XML: Path = _ROBOT_DIR / "robot_groundcontact.xml"
+MICRODUCK_GROUNDCONTACT_XML: Path = _DUCKURDF_DIR / "robot_groundcontact.xml"
 # TRUE all-collisions model: every part carries a collision geom (70 geoms,
 # 37 meshes; power_support demoted to self_collision_only like every variant).
 # No task uses it yet — exported 2026-09 for future envs needing full contact.
-MICRODUCK_ALLCOLLISIONS_XML: Path = _ROBOT_DIR / "robot_allcollisions.xml"
+MICRODUCK_ALLCOLLISIONS_XML: Path = _DUCKURDF_DIR / "robot_allcollisions.xml"
 # 70mm / 15g ball prop for the BallKick task.
 MICRODUCK_BALL_XML: Path = _ROBOT_DIR / "ball.xml"
 # Roller-skate model: 14 actuated joints + passive wheel hinges (passive_*wheel).
-MICRODUCK_GROUNDCONTACT_ROLLERS_XML: Path = _ROBOT_DIR / "robot_groundcontact_rollers.xml"
+MICRODUCK_GROUNDCONTACT_ROLLERS_XML: Path = _DUCKURDF_DIR / "robot_groundcontact_rollers.xml"
 # Backlash models: every servo joint gets an unactuated passive_<joint>_backlash
 # hinge in series (±1° play, 2° total). Exported via
 # config_mjcf_{groundcontact,walk}_backlash.json (add_backlash.py post-processor).
-MICRODUCK_GROUNDCONTACT_BACKLASH_XML: Path = _ROBOT_DIR / "robot_groundcontact_backlash.xml"
-MICRODUCK_WALK_BACKLASH_XML: Path = _ROBOT_DIR / "robot_walk_backlash.xml"
-MICRODUCK_GROUNDCONTACT_ROLLERS_BACKLASH_XML: Path = _ROBOT_DIR / "robot_groundcontact_rollers_backlash.xml"
-MICRODUCK_ALLCOLLISIONS_BACKLASH_XML: Path = _ROBOT_DIR / "robot_allcollisions_backlash.xml"
+MICRODUCK_GROUNDCONTACT_BACKLASH_XML: Path = _DUCKURDF_DIR / "robot_groundcontact_backlash.xml"
+MICRODUCK_WALK_BACKLASH_XML: Path = _DUCKURDF_DIR / "robot_walk_backlash.xml"
+MICRODUCK_GROUNDCONTACT_ROLLERS_BACKLASH_XML: Path = _DUCKURDF_DIR / "robot_groundcontact_rollers_backlash.xml"
+MICRODUCK_ALLCOLLISIONS_BACKLASH_XML: Path = _DUCKURDF_DIR / "robot_allcollisions_backlash.xml"
 
 assert MICRODUCK_WALK_XML.exists(), f"XML not found: {MICRODUCK_WALK_XML}"
 assert MICRODUCK_GROUNDCONTACT_XML.exists(), f"XML not found: {MICRODUCK_GROUNDCONTACT_XML}"

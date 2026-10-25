@@ -102,13 +102,13 @@ def _resolve_play_face_up():
 # Le standup utilise [0-4, 9-13] / [5-8] : ce sont les indices du modèle SANS
 # roues, ils ne valent PAS ici. Verrouillé par tests/test_roller_standup_cfg.py.
 #
-# Seul _LEG_JOINTS est consommé (par les récompenses de pose). _NECK_JOINTS et
-# _WHEEL_JOINTS servent à la documentation et au test d'indices : le cou est
-# résolu par NOM (neck_joint_pos_l2 appelle find_joints(r".*(neck|head).*") à
-# chaque pas) et les roues par la regex ^passive_.*.
+# These three lists document the full articulation, including wheel joints.
+# Pose rewards in mdp.py first select the 14 servos, so their indices must
+# instead use _SERVO_LEG_JOINTS below. Neck/wheel terms resolve by name.
 _LEG_JOINTS   = [0, 1, 2, 3, 4, 11, 12, 13, 14, 15]
 _NECK_JOINTS  = [7, 8, 9, 10]
 _WHEEL_JOINTS = [5, 6, 16, 17]
+_SERVO_LEG_JOINTS = [0, 1, 2, 3, 4, 9, 10, 11, 12, 13]
 
 # Récompenses de PATINAGE de l'env roller : aucun sens quand on est par terre.
 # feet_flat : les lames ne sont PAS à plat pendant la montée → combattrait le geste.
@@ -180,7 +180,7 @@ def make_microduck_roller_standup_env_cfg(play: bool = False) -> ManagerBasedRlE
         weight=8.0,
         params={
             "std": 0.5,
-            "joint_indices": _LEG_JOINTS,
+            "joint_indices": _SERVO_LEG_JOINTS,
             "target_overrides": None,
         },
     )
@@ -189,7 +189,7 @@ def make_microduck_roller_standup_env_cfg(play: bool = False) -> ManagerBasedRlE
         func=microduck_mdp.pose_l1_penalty,
         weight=5.0,
         params={
-            "joint_indices": _LEG_JOINTS,
+            "joint_indices": _SERVO_LEG_JOINTS,
             "target_overrides": None,
         },
     )
@@ -294,7 +294,7 @@ def make_microduck_roller_standup_env_cfg(play: bool = False) -> ManagerBasedRlE
             "height_std": 0.04,
             "upright_std": 0.40,
             "pose_std": 0.40,
-            "joint_indices": _LEG_JOINTS,
+            "joint_indices": _SERVO_LEG_JOINTS,
             "target_overrides": None,
             "asset_cfg": SceneEntityCfg("robot", body_names=("trunk_base",)),
         },

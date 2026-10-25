@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="duckurdf">
+  <material name="microduck_trunk_green">
+    <color rgba="0.129412 0.152941 0.129412 1" />
+  </material>
+  <material name="microduck_warm_tan">
+    <color rgba="0.67451 0.639216 0.603922 1" />
+  </material>
+  <material name="microduck_neck_bluegray">
+    <color rgba="0.34902 0.376471 0.4 1" />
+  </material>
+  <material name="microduck_shell_cream">
+    <color rgba="0.85098 0.85098 0.839216 1" />
+  </material>
+  <material name="microduck_signal_orange">
+    <color rgba="1 0.403922 0.121569 1" />
+  </material>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.022633199999999999 -2.7082800000000001e-05 0.0028006400000000001" rpy="0 0 0" />
+      <mass value="0.22260241000000008" />
+      <inertia ixx="0.00013852313867681609" ixy="8.0059055530006452e-08" ixz="-2.3119592852844043e-05" iyy="0.00016305561726353255" iyz="1.479691932392182e-07" izz="0.00012888713506359678" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/base_link.STL" />
+      </geometry>
+      <material name="microduck_trunk_green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_Link">
+    <inertial>
+      <origin xyz="-1.3697345932057963e-13 0.00078951125248977573 0.025000000367983298" rpy="0 0 0" />
+      <mass value="0.036841400000000003" />
+      <inertia ixx="2.5533268077198306e-05" ixy="7.5472429910384356e-17" ixz="1.856951920851179e-24" iyy="1.6370699999999996e-05" iyz="-2.0275894727596695e-13" izz="1.1367708077198312e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/neck_Link.STL" />
+      </geometry>
+      <material name="microduck_warm_tan" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/neck_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_joint" type="revolute">
+    <origin xyz="0.0365 0 0.0102" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="neck_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.0471975511965976" upper="1.5707963267948966" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="head_pitch_Link">
+    <inertial>
+      <origin xyz="6.5329999999999964e-09 -0.014500000000000001 0.011664100000000002" rpy="0 0 0" />
+      <mass value="0.0057200000000000003" />
+      <inertia ixx="1.0918599999999992e-06" ixy="0" ixz="0" iyy="5.1211099999999981e-07" iyz="-3.2839642116755377e-22" izz="9.6685499999999961e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_pitch_Link.STL" />
+      </geometry>
+      <material name="microduck_neck_bluegray" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_pitch_joint" type="revolute">
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+    <parent link="neck_Link" />
+    <child link="head_pitch_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267948974" upper="1.5707963267948957" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="head_yaw_Link">
+    <inertial>
+      <origin xyz="-0.00016665699999999985 -0.0050096399999999975 0.017806499999999992" rpy="0 0 0" />
+      <mass value="0.048599999999999997" />
+      <inertia ixx="6.9790299999999881e-06" ixy="3.2165699999999958e-07" ixz="-3.4796999999999951e-08" iyy="8.1029299999999936e-06" iyz="3.4294999999999967e-07" izz="9.5788399999999898e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_yaw_Link.STL" />
+      </geometry>
+      <material name="microduck_trunk_green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_yaw_joint" type="revolute">
+    <origin xyz="-0.00015 0 0.03425" rpy="0 0 0" />
+    <parent link="head_pitch_Link" />
+    <child link="head_yaw_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.967059728390364" upper="2.967059728390357" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="head_roll_Link">
+    <inertial>
+      <origin xyz="0.032529000957705258 0.0016223179287391883 0.0075098203162793113" rpy="0 0 0" />
+      <mass value="0.18216113416296076" />
+      <inertia ixx="0.00012112682040186437" ixy="-3.6405001619427237e-06" ixz="-9.8270180134476274e-06" iyy="0.00026752274561552333" iyz="2.9196763220734808e-07" izz="0.00031462493878902113" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_roll_Link.STL" />
+      </geometry>
+      <material name="microduck_shell_cream" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/head_roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_roll_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="head_yaw_Link" />
+    <child link="head_roll_Link" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.4363323129986037" upper="0.43633231299856107" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="jaw_Link">
+    <inertial>
+      <origin xyz="0.032195951886067123 -0.0010335141607622381 -0.010776637061585473" rpy="0 0 0" />
+      <mass value="0.029983275837039299" />
+      <inertia ixx="3.5688911113641599e-05" ixy="-9.8918028460679645e-07" ixz="2.1478984312445398e-06" iyy="1.247441427309716e-05" iyz="3.3807672776052823e-07" izz="4.6384075939590718e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/jaw_Link.STL" />
+      </geometry>
+      <material name="microduck_signal_orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/jaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="jaw_joint" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="head_roll_Link" />
+    <child link="jaw_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="0.5" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="right_hip_yaw_Link">
+    <inertial>
+      <origin xyz="0.00099413999999999969 0 -0.016891699999999992" rpy="0 0 0" />
+      <mass value="0.023040600000000001" />
+      <inertia ixx="3.4175199999999983e-06" ixy="0" ixz="5.0880999999999964e-08" iyy="4.1963999999999985e-06" iyz="0" izz="2.3264999999999984e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_yaw_Link.STL" />
+      </geometry>
+      <material name="microduck_trunk_green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_hip_yaw_joint" type="revolute">
+    <origin xyz="0.016 -0.0175 -0.0233" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_hip_yaw_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.4363323129985824" upper="0.5235987755982988" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="right_hip_roll_Link">
+    <inertial>
+      <origin xyz="-0.0082999199999999971 -0.014814999999999993 -1.6499998157048724e-11" rpy="0 0 0" />
+      <mass value="0.0061893399999999998" />
+      <inertia ixx="6.5158799999999939e-07" ixy="-3.8988199999999963e-07" ixz="-1.4468148239505384e-22" iyy="8.6062599999999931e-07" iyz="8.6571236569636695e-23" izz="1.1575299999999982e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_roll_Link.STL" />
+      </geometry>
+      <material name="microduck_warm_tan" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_hip_roll_joint" type="revolute">
+    <origin xyz="0 0 -0.0167" rpy="0 0 0" />
+    <parent link="right_hip_yaw_Link" />
+    <child link="right_hip_roll_Link" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.3839724354387525" upper="0.3839724354387525" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="right_hip_pitch_Link">
+    <inertial>
+      <origin xyz="-0.022883799999999989 -0.013453099999999996 -0.0067659999999999908" rpy="0 0 0" />
+      <mass value="0.048206699999999998" />
+      <inertia ixx="1.0369099999999992e-05" ixy="3.8929799999999971e-07" ixz="-4.4185199999999981e-06" iyy="1.9826899999999985e-05" iyz="2.2798199999999967e-07" izz="1.6875299999999981e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_pitch_Link.STL" />
+      </geometry>
+      <material name="microduck_shell_cream" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_hip_pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_hip_pitch_joint" type="revolute">
+    <origin xyz="0 -0.032278 0" rpy="0 0 0" />
+    <parent link="right_hip_roll_Link" />
+    <child link="right_hip_pitch_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267949268" upper="1.5707963267948664" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="right_knee_Link">
+    <inertial>
+      <origin xyz="-3.5409120223063514e-18 -0.0095350499999999928 -0.031893699999999969" rpy="0 0 0" />
+      <mass value="0.0215844" />
+      <inertia ixx="5.250559999999994e-06" ixy="-8.493261649533639e-23" ixz="-3.4366830096681593e-22" iyy="4.3392499999999949e-06" iyz="-7.6500499999999895e-07" izz="2.1550699999999965e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_knee_Link.STL" />
+      </geometry>
+      <material name="microduck_warm_tan" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_knee_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_knee_joint" type="revolute">
+    <origin xyz="-0.0355 0 -0.022" rpy="0 0 0" />
+    <parent link="right_hip_pitch_Link" />
+    <child link="right_knee_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="right_ankle_Link">
+    <inertial>
+      <origin xyz="0.0039297480037500101 0.00089607662259741426 -0.015542297479371043" rpy="0 0 0" />
+      <mass value="0.030024849999999999" />
+      <inertia ixx="1.2554380903545839e-05" ixy="-9.045554284502485e-07" ixz="8.5174381853658649e-08" iyy="7.985656421396108e-06" iyz="-8.5201111909675133e-07" izz="1.7844710978871277e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_ankle_Link.STL" />
+      </geometry>
+      <material name="microduck_signal_orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/right_ankle_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_ankle_joint" type="revolute">
+    <origin xyz="0 0 -0.0405" rpy="0 0 0" />
+    <parent link="right_knee_Link" />
+    <child link="right_ankle_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267948903" upper="1.5707963267949028" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="left_hip_yaw_Link">
+    <inertial>
+      <origin xyz="0.00099413999999999969 0 -0.016891699999999992" rpy="0 0 0" />
+      <mass value="0.023040600000000001" />
+      <inertia ixx="3.4175199999999983e-06" ixy="0" ixz="5.0880999999999964e-08" iyy="4.1963999999999985e-06" iyz="0" izz="2.3264999999999984e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_yaw_Link.STL" />
+      </geometry>
+      <material name="microduck_trunk_green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_hip_yaw_joint" type="revolute">
+    <origin xyz="0.016 0.0175 -0.0233" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_hip_yaw_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.4363323129985824" upper="0.5235987755982988" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="left_hip_roll_Link">
+    <inertial>
+      <origin xyz="-0.0082999199999999971 0.014814999999999993 -1.6499998157048724e-11" rpy="0 0 0" />
+      <mass value="0.0061893399999999998" />
+      <inertia ixx="6.5158799999999939e-07" ixy="3.8988199999999963e-07" ixz="-1.4468148239505384e-22" iyy="8.6062599999999931e-07" iyz="-8.6571236569636695e-23" izz="1.1575299999999982e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_roll_Link.STL" />
+      </geometry>
+      <material name="microduck_warm_tan" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_hip_roll_joint" type="revolute">
+    <origin xyz="0 0 -0.0167" rpy="0 0 0" />
+    <parent link="left_hip_yaw_Link" />
+    <child link="left_hip_roll_Link" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.3839724354387525" upper="0.3839724354387525" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="left_hip_pitch_Link">
+    <inertial>
+      <origin xyz="-0.022883799999999989 0.013453099999999996 -0.0067659999999999908" rpy="0 0 0" />
+      <mass value="0.048206699999999998" />
+      <inertia ixx="1.0369099999999992e-05" ixy="-3.8929799999999971e-07" ixz="-4.4185199999999981e-06" iyy="1.9826899999999985e-05" iyz="-2.2798199999999967e-07" izz="1.6875299999999981e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_pitch_Link.STL" />
+      </geometry>
+      <material name="microduck_shell_cream" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_hip_pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_hip_pitch_joint" type="revolute">
+    <origin xyz="0 0.032278 0" rpy="0 0 0" />
+    <parent link="left_hip_roll_Link" />
+    <child link="left_hip_pitch_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.570796326795005" upper="1.5707963267947882" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="left_knee_Link">
+    <inertial>
+      <origin xyz="-3.5409120223063514e-18 0.0095350499999999928 -0.031893699999999969" rpy="0 0 0" />
+      <mass value="0.0215844" />
+      <inertia ixx="5.250559999999994e-06" ixy="8.493261649533639e-23" ixz="-3.4366830096681593e-22" iyy="4.3392499999999949e-06" iyz="7.6500499999999895e-07" izz="2.1550699999999965e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_knee_Link.STL" />
+      </geometry>
+      <material name="microduck_warm_tan" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_knee_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_knee_joint" type="revolute">
+    <origin xyz="-0.0355 0 -0.022" rpy="0 0 0" />
+    <parent link="left_hip_pitch_Link" />
+    <child link="left_knee_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267948966" upper="1.5707963267948966" effort="0.96" velocity="10.0" />
+  </joint>
+  <link name="left_ankle_Link">
+    <inertial>
+      <origin xyz="0.0041833846060703199 -0.00088579818833045174 -0.015489531827414285" rpy="0 0 0" />
+      <mass value="0.030024849999999999" />
+      <inertia ixx="1.2557894152019372e-05" ixy="7.9274978098820941e-07" ixz="1.019625910118085e-07" iyy="7.9480732399647631e-06" iyz="8.2916217474509491e-07" izz="1.7821842954493328e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_ankle_Link.STL" />
+      </geometry>
+      <material name="microduck_signal_orange" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckurdf/meshes/left_ankle_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_ankle_joint" type="revolute">
+    <origin xyz="0 0 -0.0405" rpy="0 0 0" />
+    <parent link="left_knee_Link" />
+    <child link="left_ankle_Link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.5707963267948912" upper="1.5707963267949019" effort="0.96" velocity="10.0" />
+  </joint>
+</robot>

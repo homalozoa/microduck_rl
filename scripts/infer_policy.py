@@ -20,7 +20,8 @@ import mujoco
 import mujoco.viewer
 import onnxruntime as ort
 
-MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene.xml"
+MICRODUCK_XML = "src/mjlab_microduck/robot/duckurdf/scene.xml"  # DuckURDF, the training robot
+# MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene.xml"  # original Onshape model
 # MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_ramps.xml"
 # MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_floor_objects.xml"
 # MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_robot_walk.xml"
